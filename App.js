@@ -11,21 +11,23 @@ import {
 
 import Notifications from "./functions/Notifications";
 import { db } from "./database/firebase";
-import { collection, getDocs, where, query, orderBy } from "firebase/firestore";
+
 import RegisterPushNotificationIssues from "./functions/PushNotificationIssue";
 import RegisterPushNotificationJobs from "./functions/PushNotificationJobs";
 import registerForPushNotificationsAsync from "./functions/registerForPushNotificationsAsync";
-import queryPushNotificationIssesLog from "./functions/queryPushNotificationIssesLog";
+import queryPushNotificationLog from "./functions/queryPushNotificationLog";
 import Notification from "./components/Notification";
 import SubscriptionIssuesNotification from "./components/SubscriptionIssuesNotification";
 import SubscriptionJobsNotification from "./components/SubscriptionJobsNotification";
 
 export default function App() {
   const [expoPushToken, setExpoPushToken] = useState("");
+  const [type, setType] = useState("");
   const [showNotification, setShowNotification] = useState([]);
   const [notification, setNotification] = useState(false);
   const [notificationOutSide, setNotificationOutSide] = useState(false);
-  const [viewNotification, setViewNotification] = useState(false);
+  const [viewJobNotification, setviewJobNotification] = useState(false);
+  const [viewIssueNotification, setviewIssueNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
   const [refreshing, setRefreshing] = React.useState(false);
@@ -35,9 +37,9 @@ export default function App() {
     setShowNotification(undefined);
     setTimeout(() => {
       setRefreshing(false);
-      queryPushNotificationIssesLog(setShowNotification);
+      queryPushNotificationLog(setShowNotification, type);
     }, 2000);
-  }, []);
+  }, [type]);
   useEffect(() => {
     registerForPushNotificationsAsync().then(async (token) => {
       setExpoPushToken(token);
@@ -71,13 +73,16 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    queryPushNotificationIssesLog(setShowNotification);
+    queryPushNotificationLog(setShowNotification, type);
 
     return () => {};
   }, [setShowNotification]);
-  const queryFirebase = () => {
-    queryPushNotificationIssesLog(setShowNotification);
+  const queryFirebase = (type) => {
+    setType(type);
+    queryPushNotificationLog(setShowNotification, type);
   };
+  console.log("viewIssueNotification: ", viewJobNotification);
+  console.log("viewJobNotification: ", viewJobNotification);
   return (
     <View style={{ flex: 1, left: 10, top: 100 }}>
       <Text style={{ fontSize: 16, bottom: 10 }}>
@@ -85,12 +90,32 @@ export default function App() {
       </Text>
       <Button
         onPress={() => {
-          viewNotification
-            ? setViewNotification(false)
-            : setViewNotification(true);
-          queryFirebase();
+          viewIssueNotification
+            ? setviewIssueNotification(false)
+            : setviewIssueNotification(true);
+          queryFirebase("Issue");
+          setviewJobNotification(false);
         }}
-        title={viewNotification ? "Ocultar notificaiones" : "Ver notificaiones"}
+        title={
+          viewIssueNotification
+            ? "Hide Issues Notifications"
+            : "show Issues Notifications"
+        }
+      />
+      <Text>{"\n"}</Text>
+      <Button
+        onPress={() => {
+          viewJobNotification
+            ? setviewJobNotification(false)
+            : setviewJobNotification(true);
+          queryFirebase("Job");
+          setviewIssueNotification(false);
+        }}
+        title={
+          viewJobNotification
+            ? "Hide Jobs Notifications"
+            : "show Jobs Notifications"
+        }
       />
       <Text>{"\n"}</Text>
       {expoPushToken ? (
@@ -106,7 +131,8 @@ export default function App() {
       ) : (
         <ActivityIndicator />
       )}
-      {viewNotification ? null : notification && !notificationOutSide ? (
+      {viewIssueNotification || viewJobNotification ? null : notification &&
+        !notificationOutSide ? (
         <>
           <Notification
             title={notification.request.content.title}
@@ -123,7 +149,7 @@ export default function App() {
           />
         </>
       )}
-      {viewNotification ? (
+      {viewIssueNotification || viewJobNotification ? (
         <ScrollView
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

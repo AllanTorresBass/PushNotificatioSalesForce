@@ -1,11 +1,12 @@
 import { collection, getDocs, where, query, orderBy } from "firebase/firestore";
 import { db } from "../database/firebase";
-const queryPushNotificationIssesLog = async (setShowNotification) => {
+const queryPushNotificationIssesLog = async (setShowNotification, type) => {
   let queryIssues;
   let array = [];
+  let document = `Push_Notification_${type}s_log`;
   setShowNotification(undefined);
   const q = query(
-    collection(db, "Push_Notification_Issues_log"),
+    collection(db, document),
     orderBy("id", "desc"),
     where("site_id", "==", "p:northHotelKeyWest24:r:2a3cbbf4-0d3cf345")
   );
