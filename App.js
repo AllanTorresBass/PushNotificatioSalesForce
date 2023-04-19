@@ -18,6 +18,7 @@ import registerForPushNotificationsAsync from "./functions/registerForPushNotifi
 import queryPushNotificationIssesLog from "./functions/queryPushNotificationIssesLog";
 import Notification from "./components/Notification";
 import SubscriptionIssuesNotification from "./components/SubscriptionIssuesNotification";
+import SubscriptionJobsNotification from "./components/SubscriptionJobsNotification";
 
 export default function App() {
   const [expoPushToken, setExpoPushToken] = useState("");
@@ -92,7 +93,19 @@ export default function App() {
         title={viewNotification ? "Ocultar notificaiones" : "Ver notificaiones"}
       />
       <Text>{"\n"}</Text>
-      <SubscriptionIssuesNotification token={expoPushToken} />
+      {expoPushToken ? (
+        <SubscriptionIssuesNotification token={expoPushToken} />
+      ) : (
+        <ActivityIndicator />
+      )}
+      <Text>{"\n"}</Text>
+      {expoPushToken ? (
+        <>
+          <SubscriptionJobsNotification token={expoPushToken} />
+        </>
+      ) : (
+        <ActivityIndicator />
+      )}
       {viewNotification ? null : notification && !notificationOutSide ? (
         <>
           <Notification

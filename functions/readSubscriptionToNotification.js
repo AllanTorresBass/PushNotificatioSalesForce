@@ -5,24 +5,30 @@ import {
   setDoc,
   collection,
   getDocs,
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "../database/firebase";
-const readSubscriptionToIssuesNotification = async (type, token) => {
+const readSubscriptionToNotification = async (type, token) => {
   let querySubscriptionsList;
   let array = [];
   let document = `Push_Notification_${type}`;
-  console.log("token: ", token);
-  console.log("document: ", document);
+
   const q = query(collection(db, document), where("device", "==", token));
 
   querySubscriptionsList = await getDocs(q);
+  const unsub = onSnapshot(doc(db, document, token), (doc) => {
+    console.log("Current data: ", doc.data());
+    array.push(doc.data());
+    if (array.length > 0) {
+      return array;
+    } else return "Error";
+  });
   querySubscriptionsList.forEach((doc) => {
-    console.log("doc.data(): ", doc.data());
     array.push(doc.data());
   });
   if (array.length > 0) {
     return array;
-  } else "Error";
+  } else return "Error";
 };
 
-export default readSubscriptionToIssuesNotification;
+export default readSubscriptionToNotification;
