@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { View, Button } from "react-native";
 import readSubscriptionToNotification from "../functions/readSubscriptionToNotification";
 import updateSubscriptionToNotification from "../functions/updateSubscriptionToNotifications";
-const SubscriptionIssuesNotification = ({ token }) => {
+const SubscriptionNotification = ({ token, type }) => {
   const [subcription, setSubcription] = useState({});
   const [flag, setFlag] = useState(false);
 
   useEffect(() => {
     (() => {
-      readSubscriptionToNotification("Issue", token).then((res) =>
+      readSubscriptionToNotification(type, token).then((res) =>
         setSubcription(res)
       );
     })();
@@ -17,9 +17,9 @@ const SubscriptionIssuesNotification = ({ token }) => {
   }, [flag]);
 
   const handelSubscription = () => {
-    updateSubscriptionToNotification("Issue", token, subcription[0]?.active);
+    updateSubscriptionToNotification(type, token, subcription[0]?.active);
     // setSubcription(undefined);
-    readSubscriptionToNotification("Issue", token).then((res) =>
+    readSubscriptionToNotification(type, token).then((res) =>
       setSubcription(res)
     );
   };
@@ -30,11 +30,11 @@ const SubscriptionIssuesNotification = ({ token }) => {
           handelSubscription();
           setFlag(!flag);
         }}
-        title="Subscription to Issues Notification"
+        title={`Subscription to ${type}s Notification`}
         color={subcription[0]?.active ? "green" : "red"}
       />
     </View>
   );
 };
 
-export default SubscriptionIssuesNotification;
+export default SubscriptionNotification;

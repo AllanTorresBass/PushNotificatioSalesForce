@@ -4,14 +4,13 @@ import { Text, View, Button, ActivityIndicator } from "react-native";
 import Notifications from "./functions/Notifications";
 import { db } from "./database/firebase";
 
-import RegisterPushNotificationIssues from "./functions/PushNotificationIssue";
-import RegisterPushNotificationJobs from "./functions/PushNotificationJobs";
+import RegisterPushNotificationIssues from "./functions/registerPushNotificationIssue";
+import RegisterPushNotificationJobs from "./functions/registerPushNotificationJobs";
 import registerForPushNotificationsAsync from "./functions/registerForPushNotificationsAsync";
 import queryPushNotificationLog from "./functions/queryPushNotificationLog";
 import Notification from "./components/Notification";
-import SubscriptionIssuesNotification from "./components/SubscriptionIssuesNotification";
-import SubscriptionJobsNotification from "./components/SubscriptionJobsNotification";
 import ShowNotifications from "./components/ShowNotifications";
+import SubscriptionNotification from "./components/SubscriptionNotification";
 
 export default function App() {
   const [expoPushToken, setExpoPushToken] = useState("");
@@ -103,14 +102,14 @@ export default function App() {
       />
       <Text>{"\n"}</Text>
       {expoPushToken ? (
-        <SubscriptionIssuesNotification token={expoPushToken} />
+        <SubscriptionNotification token={expoPushToken} type={"Issue"} />
       ) : (
         <ActivityIndicator />
       )}
       <Text>{"\n"}</Text>
       {expoPushToken ? (
         <>
-          <SubscriptionJobsNotification token={expoPushToken} />
+          <SubscriptionNotification token={expoPushToken} type={"Job"} />
         </>
       ) : (
         <ActivityIndicator />
