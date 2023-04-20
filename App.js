@@ -1,13 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  RefreshControl,
-  Text,
-  View,
-  Button,
-  Platform,
-  ScrollView,
-  ActivityIndicator,
-} from "react-native";
+import { Text, View, Button, ActivityIndicator } from "react-native";
 
 import Notifications from "./functions/Notifications";
 import { db } from "./database/firebase";
@@ -19,10 +11,11 @@ import queryPushNotificationLog from "./functions/queryPushNotificationLog";
 import Notification from "./components/Notification";
 import SubscriptionIssuesNotification from "./components/SubscriptionIssuesNotification";
 import SubscriptionJobsNotification from "./components/SubscriptionJobsNotification";
+import ShowNotifications from "./components/ShowNotifications";
 
 export default function App() {
   const [expoPushToken, setExpoPushToken] = useState("");
-  const [type, setType] = useState("");
+  const [type, setType] = useState("Issue");
   const [showNotification, setShowNotification] = useState([]);
   const [notification, setNotification] = useState(false);
   const [notificationOutSide, setNotificationOutSide] = useState(false);
@@ -30,16 +23,7 @@ export default function App() {
   const [viewIssueNotification, setviewIssueNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
-  const [refreshing, setRefreshing] = React.useState(false);
 
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setShowNotification(undefined);
-    setTimeout(() => {
-      setRefreshing(false);
-      queryPushNotificationLog(setShowNotification, type);
-    }, 2000);
-  }, [type]);
   useEffect(() => {
     registerForPushNotificationsAsync().then(async (token) => {
       setExpoPushToken(token);
@@ -150,24 +134,17 @@ export default function App() {
         </>
       )}
       {viewIssueNotification || viewJobNotification ? (
-        <ScrollView
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        >
-          <View style={{ height: 1000, width: 300 }}>
-            <Text>{"\n"}</Text>
-            {showNotification ? (
-              showNotification?.map((e, i) => (
-                <Text key={"key" + i} style={{ fontSize: 20, bottom: 10 }}>
-                  {e.Description}
-                </Text>
-              ))
-            ) : (
-              <ActivityIndicator />
-            )}
-          </View>
-        </ScrollView>
+        <>
+          {showNotification ? (
+            <ShowNotifications
+              showNotification={showNotification}
+              setShowNotification={setShowNotification}
+              type={type}
+            />
+          ) : (
+            <ActivityIndicator />
+          )}
+        </>
       ) : null}
     </View>
   );

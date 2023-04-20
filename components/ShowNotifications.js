@@ -6,7 +6,17 @@ import {
   ScrollView,
   ActivityIndicator,
 } from "react-native";
-const ShowNotifications = (refreshing, onRefresh, showNotification) => {
+import queryPushNotificationIssesLog from "../functions/queryPushNotificationLog";
+const ShowNotifications = ({ showNotification, setShowNotification, type }) => {
+  const [refreshing, setRefreshing] = React.useState(false);
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setShowNotification(undefined);
+    setTimeout(() => {
+      setRefreshing(false);
+      queryPushNotificationIssesLog(setShowNotification, type);
+    }, 2000);
+  }, [type]);
   return (
     <ScrollView
       refreshControl={
