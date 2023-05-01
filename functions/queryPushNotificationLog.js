@@ -13,7 +13,7 @@ const queryPushNotificationIssesLog = async (setShowNotification, type) => {
 
   queryIssues = await getDocs(q);
   queryIssues.forEach((doc) => {
-    array.push(doc.data());
+    array.push({ ...doc.data(), documentId: doc.id });
   });
 
   setShowNotification(array);

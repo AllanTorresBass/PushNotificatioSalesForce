@@ -30,7 +30,7 @@ const SubscriptionNotification = ({ token, type }) => {
           handelSubscription();
           setFlag(!flag);
         }}
-        title={`Subscription to ${type}s Notification`}
+        title={`${type}s Notification`}
         color={subcription[0]?.active ? "green" : "red"}
       />
     </View>

@@ -17,7 +17,6 @@ const readSubscriptionToNotification = async (type, token) => {
 
   querySubscriptionsList = await getDocs(q);
   const unsub = onSnapshot(doc(db, document, token), (doc) => {
-    console.log("Current data: ", doc.data());
     array.push(doc.data());
     if (array.length > 0) {
       return array;
