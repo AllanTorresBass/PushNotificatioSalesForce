@@ -17,7 +17,7 @@ En el **[Componente de ShowNotifications](https://github.com/AllanTorresBass/Pus
 
 
 ## Proceso de registrar el dispositivo a una notificación: 
-
+En el **[Componente App.js](https://github.com/AllanTorresBass/PushNotification-Salesforce/blob/main/App.js)** esta segmento de codigo referente como registrar el dispositivo a una notificación. 
 En este proceso se usan las siguientes funciones:
 - [Notifications](https://github.com/AllanTorresBass/PushNotification-Salesforce/blob/main/functions/Notifications.js)
 - [registerForPushNotificationsAsync](https://github.com/AllanTorresBass/PushNotification-Salesforce/blob/main/functions/registerForPushNotificationsAsync.js)
