@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import queryPushNotificationLog from "../functions/queryPushNotificationLog";
 import updateUnreadToNotification from "../functions/updateUnreadToNotification";
+import updateDeletedToNotification from "../functions/updateDeletedToNotification";
 const ShowNotifications = ({ showNotification, setShowNotification, type }) => {
   const [refreshing, setRefreshing] = React.useState(false);
 
@@ -33,31 +34,67 @@ const ShowNotifications = ({ showNotification, setShowNotification, type }) => {
         {showNotification ? (
           showNotification?.map((e, i) => {
             // console.log(e);
-            return (
-              <TouchableOpacity
-                key={"key" + i}
-                onPress={async () => {
-                  queryPushNotificationLog(setShowNotification, type);
-                  await updateUnreadToNotification(type, e.documentId);
-                }}
-                style={{
-                  backgroundColor: e.unread ? "#BDF3BF" : "gray",
-                  borderRadius: 5,
-                  borderColor: "black",
-                  borderWidth: 1,
-                  height: 40,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Text
-                  style={{ color: e.unread ? "black" : "white", fontSize: 18 }}
+            if (!e.deleted)
+              return (
+                <View
+                  key={"keyx" + i}
+                  style={{ display: "flex", flexDirection: "row" }}
                 >
-                  {" "}
-                  {e.Description}
-                </Text>
-              </TouchableOpacity>
-            );
+                  <TouchableOpacity
+                    key={"key2" + i}
+                    onPress={async () => {
+                      queryPushNotificationLog(setShowNotification, type);
+                      await updateUnreadToNotification(type, e.documentId);
+                    }}
+                    style={{
+                      backgroundColor: e.unread ? "#BDF3BF" : "gray",
+                      borderRadius: 5,
+                      borderColor: "black",
+                      borderWidth: 1,
+                      height: 50,
+                      width: 290,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: e.unread ? "black" : "white",
+                        fontSize: 18,
+                      }}
+                    >
+                      {" "}
+                      {e.Description}
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    key={"key" + i}
+                    onPress={async () => {
+                      queryPushNotificationLog(setShowNotification, type);
+                      await updateDeletedToNotification(type, e.documentId);
+                    }}
+                    style={{
+                      borderRadius: 5,
+                      borderColor: "black",
+                      borderWidth: 1,
+                      height: 50,
+                      width: 25,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: "red",
+                        fontSize: 38,
+                        top: -5,
+                      }}
+                    >
+                      x
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              );
           })
         ) : (
           <ActivityIndicator />

@@ -67,10 +67,38 @@ export default function App() {
 
   return (
     <View style={{ flex: 1, left: 10, top: 12 }}>
-      <Text style={{ fontSize: 16, bottom: 10 }}>
+      <Text>{"\n"}</Text>
+      {/* <Text style={{ fontSize: 16, bottom: 10 }}>
         Your expo push token: {expoPushToken}
+      </Text> */}
+      <Text
+        style={{
+          marginTop: -8,
+          color: "red",
+          fontWeight: "bold",
+          fontSize: 17,
+        }}
+      >
+        {" "}
+        {"\n"}Subscribe:
       </Text>
-      <View style={{ display: "flex", flexDirection: "row" }}>
+      <View style={{ display: "flex", flexDirection: "row", left: 30 }}>
+        {expoPushToken ? (
+          <SubscriptionNotification token={expoPushToken} type={"Issue"} />
+        ) : (
+          <ActivityIndicator />
+        )}
+
+        <Text>{"\n"}</Text>
+        {expoPushToken ? (
+          <>
+            <SubscriptionNotification token={expoPushToken} type={"Job"} />
+          </>
+        ) : (
+          <ActivityIndicator />
+        )}
+      </View>
+      <View style={{ display: "flex", flexDirection: "row", top: 10 }}>
         <Button
           onPress={() => {
             viewIssueNotification
@@ -100,33 +128,6 @@ export default function App() {
               : "show Jobs Notifications"
           }
         />
-      </View>
-      <View style={{ display: "flex", flexDirection: "row" }}>
-        <Text
-          style={{
-            marginTop: -8,
-            color: "red",
-            fontWeight: "bold",
-            fontSize: 17,
-          }}
-        >
-          {" "}
-          {"\n"}Subscribe:
-        </Text>
-        {expoPushToken ? (
-          <SubscriptionNotification token={expoPushToken} type={"Issue"} />
-        ) : (
-          <ActivityIndicator />
-        )}
-
-        <Text>{"\n"}</Text>
-        {expoPushToken ? (
-          <>
-            <SubscriptionNotification token={expoPushToken} type={"Job"} />
-          </>
-        ) : (
-          <ActivityIndicator />
-        )}
       </View>
       {viewIssueNotification || viewJobNotification ? null : notification &&
         !notificationOutSide ? (
