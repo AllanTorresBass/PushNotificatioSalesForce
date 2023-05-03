@@ -14,3 +14,12 @@ En el **[Componente de ShowNotifications](https://github.com/AllanTorresBass/Pus
 - [queryPushNotificationLog](https://github.com/AllanTorresBass/PushNotification-Salesforce/blob/main/functions/updateSubscriptionToNotifications.js)
 - [updateUnreadToNotification](https://github.com/AllanTorresBass/PushNotification-Salesforce/blob/main/functions/readSubscriptionToNotification.js)
 - [updateUnreadToNotification](https://github.com/AllanTorresBass/PushNotification-Salesforce/blob/main/functions/updateDeletedToNotification.js)
+
+
+## Proceso de registrar el dispositivo a una notificación: 
+
+En este proceso se usan las siguientes funciones:
+
+- [registerForPushNotificationsAsync](https://github.com/AllanTorresBass/PushNotification-Salesforce/blob/main/functions/registerForPushNotificationsAsync.js)
+- [RegisterPushNotificationIssues](https://github.com/AllanTorresBass/PushNotification-Salesforce/blob/main/functions/registerPushNotificationIssue.js)
+- [registerPushNotificationJobs.js](https://github.com/AllanTorresBass/PushNotification-Salesforce/blob/main/functions/registerPushNotificationJobs.js)
