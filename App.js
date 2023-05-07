@@ -34,15 +34,18 @@ export default function App() {
 
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
+        console.log("notification", notification);
         setNotification(notification);
         setNotificationOutSide(null);
       });
 
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log("response", response);
         setNotificationOutSide({
           title: response.notification.request.content.title,
           body: response.notification.request.content.body,
+          someData: response.notification.request.content.data.someData,
           data: response.notification.request.content.data.someData,
         });
       });
@@ -136,6 +139,7 @@ export default function App() {
             title={notification.request.content.title}
             body={notification.request.content.body}
             someData={notification.request.content.data.someData}
+            data={notification.request.content.data.data}
           />
         </>
       ) : (
@@ -143,7 +147,8 @@ export default function App() {
           <Notification
             title={notificationOutSide.title}
             body={notificationOutSide.body}
-            someData={notificationOutSide.data}
+            someData={notificationOutSide.someData}
+            data={notificationOutSide.data}
           />
         </>
       )}
