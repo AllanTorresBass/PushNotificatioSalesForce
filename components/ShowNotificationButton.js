@@ -34,11 +34,23 @@ const SubscriptionNotification = ({ token, type }) => {
           paddingVertical: 5,
         }}
         onPress={() => {
-          handelSubscription();
-          setFlag(!flag);
+          viewIssueNotification
+            ? setviewIssueNotification(false)
+            : setviewIssueNotification(true);
+          queryFirebase("Issue");
+          setviewJobNotification(false);
         }}
+        title={
+          viewIssueNotification
+            ? "Hide Issues Notifications"
+            : "show Issues Notifications"
+        }
       >
-        <Text style={{ color: "white" }}> {`${type}s Notification`}</Text>
+        <Text style={{ color: "white" }}>
+          {" "}
+          viewIssueNotification ? "Hide Issues Notifications" : "show Issues
+          Notifications"
+        </Text>
       </Pressable>
     </View>
   );
