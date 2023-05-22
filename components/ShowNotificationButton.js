@@ -1,59 +1,68 @@
 import React, { useEffect, useState } from "react";
-import { View, Button, Pressable, Text } from "react-native";
-import readSubscriptionToNotification from "../functions/readSubscriptionToNotification";
-import updateSubscriptionToNotification from "../functions/updateSubscriptionToNotifications";
-const SubscriptionNotification = ({ token, type }) => {
-  const [subcription, setSubcription] = useState({});
-  const [flag, setFlag] = useState(false);
-
-  useEffect(() => {
-    (() => {
-      readSubscriptionToNotification(type, token).then((res) =>
-        setSubcription(res)
-      );
-    })();
-
-    return () => {};
-  }, [flag]);
-
-  const handelSubscription = () => {
-    updateSubscriptionToNotification(type, token, subcription[0]?.active);
-    // setSubcription(undefined);
-    readSubscriptionToNotification(type, token).then((res) =>
-      setSubcription(res)
-    );
-  };
+import { Platform, View, Pressable, Text } from "react-native";
+const ShowNotificationButton = ({
+  setviewIssueNotification,
+  viewIssueNotification,
+  setviewJobNotification,
+  viewJobNotification,
+  type,
+  queryFirebase,
+}) => {
   return (
-    <View style={{ padding: 5 }}>
+    <View
+      style={{
+        padding: 2,
+        borderColor: "black",
+        borderWidth: 1,
+        width: "50%",
+      }}
+    >
       <Pressable
         style={{
-          backgroundColor: subcription[0]?.active ? "green" : "red",
+          backgroundColor: "blue",
 
           borderRadius: 10,
-          paddingHorizontal: 15,
-          paddingVertical: 5,
+          paddingHorizontal: 5,
+          paddingVertical: 3,
+          width: "100%",
         }}
         onPress={() => {
-          viewIssueNotification
-            ? setviewIssueNotification(false)
-            : setviewIssueNotification(true);
-          queryFirebase("Issue");
-          setviewJobNotification(false);
+          if (type === "Issue") {
+            viewIssueNotification
+              ? setviewIssueNotification(false)
+              : setviewIssueNotification(true);
+            queryFirebase("Issue");
+            setviewJobNotification(false);
+          }
+          if (type === "Job") {
+            viewJobNotification
+              ? setviewJobNotification(false)
+              : setviewJobNotification(true);
+            queryFirebase("Job");
+            setviewIssueNotification(false);
+          }
         }}
-        title={
-          viewIssueNotification
-            ? "Hide Issues Notifications"
-            : "show Issues Notifications"
-        }
       >
-        <Text style={{ color: "white" }}>
-          {" "}
-          viewIssueNotification ? "Hide Issues Notifications" : "show Issues
-          Notifications"
+        <Text
+          style={{
+            color: "white",
+            textAlign: "center",
+            fontSize: Platform.OS === "ios" ? 16 : 12,
+          }}
+        >
+          {type === "Issue"
+            ? viewIssueNotification
+              ? "Hide Issues Notifications"
+              : "show Issues Notifications"
+            : type === "Job"
+            ? viewJobNotification
+              ? "Hide Jobs Notifications"
+              : "show Jobs Notifications"
+            : null}
         </Text>
       </Pressable>
     </View>
   );
 };
 
-export default SubscriptionNotification;
+export default ShowNotificationButton;

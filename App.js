@@ -11,6 +11,7 @@ import queryPushNotificationLog from "./functions/queryPushNotificationLog";
 import Notification from "./components/Notification";
 import ShowNotifications from "./components/ShowNotifications";
 import SubscriptionNotification from "./components/SubscriptionNotification";
+import ShowNotificationButton from "./components/ShowNotificationButton";
 
 export default function App() {
   const [expoPushToken, setExpoPushToken] = useState("");
@@ -69,7 +70,17 @@ export default function App() {
   };
 
   return (
-    <View style={{ flex: 1, left: 10, top: 12 }}>
+    <View
+      style={{
+        flex: 1,
+        left: 5,
+        top: 12,
+        width: "98%",
+        align: "center",
+        borderColor: "red",
+        borderWidth: 3,
+      }}
+    >
       <Text>{"\n"}</Text>
       {/* <Text style={{ fontSize: 16, bottom: 10 }}>
         Your expo push token: {expoPushToken}
@@ -101,35 +112,31 @@ export default function App() {
           <ActivityIndicator />
         )}
       </View>
-      <View style={{ display: "flex", flexDirection: "row", top: 10 }}>
-        <Button
-          onPress={() => {
-            viewIssueNotification
-              ? setviewIssueNotification(false)
-              : setviewIssueNotification(true);
-            queryFirebase("Issue");
-            setviewJobNotification(false);
-          }}
-          title={
-            viewIssueNotification
-              ? "Hide Issues Notifications"
-              : "show Issues Notifications"
-          }
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          top: 10,
+          borderColor: "yellow",
+          borderWidth: 3,
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
+        <ShowNotificationButton
+          queryFirebase={queryFirebase}
+          setviewIssueNotification={setviewIssueNotification}
+          viewIssueNotification={viewIssueNotification}
+          setviewJobNotification={setviewJobNotification}
+          type="Issue"
         />
-        <Text>{"\n"}</Text>
-        <Button
-          onPress={() => {
-            viewJobNotification
-              ? setviewJobNotification(false)
-              : setviewJobNotification(true);
-            queryFirebase("Job");
-            setviewIssueNotification(false);
-          }}
-          title={
-            viewJobNotification
-              ? "Hide Jobs Notifications"
-              : "show Jobs Notifications"
-          }
+
+        <ShowNotificationButton
+          queryFirebase={queryFirebase}
+          setviewJobNotification={setviewJobNotification}
+          viewJobNotification={viewJobNotification}
+          type="Job"
+          setviewIssueNotification={setviewIssueNotification}
         />
       </View>
       {viewIssueNotification || viewJobNotification ? null : notification &&
