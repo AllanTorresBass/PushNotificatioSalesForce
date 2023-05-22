@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import {
+  Platform,
   TouchableOpacity,
   RefreshControl,
   Text,
@@ -27,8 +28,9 @@ const ShowNotifications = ({ showNotification, setShowNotification, type }) => {
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
+      style={{ height: 1000, width: "100%" }}
     >
-      <View style={{ height: 1000, width: 300 }}>
+      <View style={{ height: 1000, width: "100%" }}>
         <Text>{"\n"}</Text>
 
         {showNotification ? (
@@ -38,7 +40,11 @@ const ShowNotifications = ({ showNotification, setShowNotification, type }) => {
               return (
                 <View
                   key={"keyx" + i}
-                  style={{ display: "flex", flexDirection: "row" }}
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    width: "100%",
+                  }}
                 >
                   <TouchableOpacity
                     key={"key2" + i}
@@ -52,7 +58,7 @@ const ShowNotifications = ({ showNotification, setShowNotification, type }) => {
                       borderColor: "black",
                       borderWidth: 1,
                       height: 50,
-                      width: 290,
+                      width: "93%",
                       alignItems: "center",
                       justifyContent: "center",
                     }}
@@ -60,7 +66,8 @@ const ShowNotifications = ({ showNotification, setShowNotification, type }) => {
                     <Text
                       style={{
                         color: e.unread ? "black" : "white",
-                        fontSize: 18,
+
+                        fontSize: Platform.OS === "ios" ? 16 : 12,
                       }}
                     >
                       {" "}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Button, Pressable, Text } from "react-native";
+import { Platform, View, Pressable, Text } from "react-native";
 import readSubscriptionToNotification from "../functions/readSubscriptionToNotification";
 import updateSubscriptionToNotification from "../functions/updateSubscriptionToNotifications";
 const SubscriptionNotification = ({ token, type }) => {

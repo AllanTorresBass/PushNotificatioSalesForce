@@ -74,7 +74,7 @@ export default function App() {
       style={{
         flex: 1,
         left: 5,
-        top: 12,
+        top: 0,
         width: "98%",
         align: "center",
         borderColor: "red",
