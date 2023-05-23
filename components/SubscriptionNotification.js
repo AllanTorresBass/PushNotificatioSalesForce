@@ -30,7 +30,7 @@ const SubscriptionNotification = ({ token, type }) => {
           backgroundColor: subcription[0]?.active ? "green" : "red",
 
           borderRadius: 10,
-          paddingHorizontal: 15,
+          paddingHorizontal: 7,
           paddingVertical: 5,
         }}
         onPress={() => {
@@ -38,7 +38,12 @@ const SubscriptionNotification = ({ token, type }) => {
           setFlag(!flag);
         }}
       >
-        <Text style={{ color: "white" }}> {`${type}s Notification`}</Text>
+        <Text
+          style={{ color: "white", fontSize: Platform.OS === "ios" ? 20 : 15 }}
+        >
+          {" "}
+          {`${type}s Notification`}
+        </Text>
       </Pressable>
     </View>
   );

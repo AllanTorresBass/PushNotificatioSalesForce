@@ -29,12 +29,28 @@ const ShowNotifications = ({ showNotification, setShowNotification, type }) => {
         display: "flex",
         flexDirection: "column",
         width: "100%",
-
+        backgroundColor: "#ABB4B7",
         top: 50,
+        borderRadius: 10,
       }}
     >
-      <View style={{}}>
-        <Text>{type} Notification List</Text>
+      <View
+        style={{
+          width: "100%",
+          height: "3.3%",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Text
+          style={{
+            fontSize: Platform.OS === "ios" ? 20 : 15,
+            fontWeight: "bold",
+            fontStyle: "italic",
+          }}
+        >
+          {type} Notification List
+        </Text>
       </View>
       <ScrollView
         refreshControl={
@@ -65,7 +81,7 @@ const ShowNotifications = ({ showNotification, setShowNotification, type }) => {
                       await updateUnreadToNotification(type, e.documentId);
                     }}
                     style={{
-                      backgroundColor: e.unread ? "#BDF3BF" : "gray",
+                      backgroundColor: e.unread ? "#BCD5DE" : "gray",
 
                       height: 50,
                       width: "93%",
@@ -91,8 +107,7 @@ const ShowNotifications = ({ showNotification, setShowNotification, type }) => {
                       await updateDeletedToNotification(type, e.documentId);
                     }}
                     style={{
-                      borderRadius: 5,
-
+                      backgroundColor: "#ABB4B7",
                       height: 50,
                       width: 25,
                       alignItems: "center",
