@@ -24,15 +24,24 @@ const ShowNotifications = ({ showNotification, setShowNotification, type }) => {
   }, [type]);
 
   return (
-    <ScrollView
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }
-      style={{ height: 1000, width: "100%" }}
-    >
-      <View style={{ height: 1000, width: "100%" }}>
-        <Text>{"\n"}</Text>
+    <View
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
 
+        top: 50,
+      }}
+    >
+      <View style={{}}>
+        <Text>{type} Notification List</Text>
+      </View>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        style={{ height: 1000, width: "100%" }}
+      >
         {showNotification ? (
           showNotification?.map((e, i) => {
             // console.log(e);
@@ -44,6 +53,9 @@ const ShowNotifications = ({ showNotification, setShowNotification, type }) => {
                     display: "flex",
                     flexDirection: "row",
                     width: "100%",
+                    borderRadius: 5,
+                    borderColor: "black",
+                    borderWidth: 1,
                   }}
                 >
                   <TouchableOpacity
@@ -54,9 +66,7 @@ const ShowNotifications = ({ showNotification, setShowNotification, type }) => {
                     }}
                     style={{
                       backgroundColor: e.unread ? "#BDF3BF" : "gray",
-                      borderRadius: 5,
-                      borderColor: "black",
-                      borderWidth: 1,
+
                       height: 50,
                       width: "93%",
                       alignItems: "center",
@@ -82,8 +92,7 @@ const ShowNotifications = ({ showNotification, setShowNotification, type }) => {
                     }}
                     style={{
                       borderRadius: 5,
-                      borderColor: "black",
-                      borderWidth: 1,
+
                       height: 50,
                       width: 25,
                       alignItems: "center",
@@ -93,7 +102,7 @@ const ShowNotifications = ({ showNotification, setShowNotification, type }) => {
                     <Text
                       style={{
                         color: "red",
-                        fontSize: 38,
+                        fontSize: Platform.OS === "ios" ? 26 : 22,
                         top: -5,
                       }}
                     >
@@ -106,8 +115,8 @@ const ShowNotifications = ({ showNotification, setShowNotification, type }) => {
         ) : (
           <ActivityIndicator />
         )}
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 

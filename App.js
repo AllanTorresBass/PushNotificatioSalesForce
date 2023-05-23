@@ -77,8 +77,6 @@ export default function App() {
         top: 0,
         width: "98%",
         align: "center",
-        borderColor: "red",
-        borderWidth: 3,
       }}
     >
       <Text>{"\n"}</Text>
@@ -93,8 +91,7 @@ export default function App() {
           fontSize: 17,
         }}
       >
-        {" "}
-        {"\n"}Subscribe:
+        Subscribe:
       </Text>
       <View style={{ display: "flex", flexDirection: "row", left: 30 }}>
         {expoPushToken ? (
@@ -114,11 +111,17 @@ export default function App() {
       </View>
       <View
         style={{
+          width: "100%",
+          borderColor: "black",
+          borderBottomWidth: 0.5,
+        }}
+      />
+      <View
+        style={{
           display: "flex",
           flexDirection: "row",
           top: 10,
-          borderColor: "yellow",
-          borderWidth: 3,
+
           alignItems: "center",
           width: "100%",
         }}
@@ -139,6 +142,15 @@ export default function App() {
           setviewIssueNotification={setviewIssueNotification}
         />
       </View>
+
+      <View
+        style={{
+          width: "100%",
+          borderColor: "black",
+          borderBottomWidth: 0.5,
+          top: 20,
+        }}
+      />
       {viewIssueNotification || viewJobNotification ? null : notification &&
         !notificationOutSide ? (
         <>
@@ -169,7 +181,11 @@ export default function App() {
               type={type}
             />
           ) : (
-            <ActivityIndicator />
+            <ActivityIndicator
+              style={{
+                top: 50,
+              }}
+            />
           )}
         </>
       ) : null}

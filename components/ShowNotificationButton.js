@@ -47,7 +47,7 @@ const ShowNotificationButton = ({
           style={{
             color: "white",
             textAlign: "center",
-            fontSize: Platform.OS === "ios" ? 16 : 12,
+            fontSize: Platform.OS === "ios" ? 16 : 13,
           }}
         >
           {type === "Issue"
