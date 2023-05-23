@@ -1,10 +1,10 @@
 import { collection, getDocs, where, query, orderBy } from "firebase/firestore";
 import { db } from "../database/firebase";
-const queryPushNotificationIssesLog = async (setShowNotification, type) => {
+const queryPushNotificationLog = async (type) => {
   let queryIssues;
   let array = [];
   let document = `Push_Notification_${type}s_log`;
-  setShowNotification(undefined);
+
   const q = query(
     collection(db, document),
     orderBy("id", "desc"),
@@ -16,6 +16,6 @@ const queryPushNotificationIssesLog = async (setShowNotification, type) => {
     array.push({ ...doc.data(), documentId: doc.id });
   });
 
-  setShowNotification(array);
+  return array;
 };
-export default queryPushNotificationIssesLog;
+export default queryPushNotificationLog;

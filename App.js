@@ -59,14 +59,21 @@ export default function App() {
     };
   }, []);
 
-  useEffect(() => {
-    queryPushNotificationLog(setShowNotification, type);
+  // useEffect(() => {
+  //   return () => {
+  //     (async () => {
+  //       const resp = await queryPushNotificationLog(type);
 
-    return () => {};
-  }, [setShowNotification]);
-  const queryFirebase = (type) => {
+  //       setShowNotification(resp);
+  //     })();
+  //   };
+  // }, [setShowNotification]);
+  const queryFirebase = async (type) => {
+    setShowNotification(undefined);
     setType(type);
-    queryPushNotificationLog(setShowNotification, type);
+    const resp = await queryPushNotificationLog(type);
+
+    setShowNotification(resp);
   };
 
   return (

@@ -17,9 +17,11 @@ const ShowNotifications = ({ showNotification, setShowNotification, type }) => {
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setShowNotification(undefined);
-    setTimeout(() => {
+    setTimeout(async () => {
       setRefreshing(false);
-      queryPushNotificationLog(setShowNotification, type);
+      const resp = await queryPushNotificationLog(type);
+
+      setShowNotification(resp);
     }, 2000);
   }, [type]);
 
@@ -60,7 +62,6 @@ const ShowNotifications = ({ showNotification, setShowNotification, type }) => {
       >
         {showNotification ? (
           showNotification?.map((e, i) => {
-            // console.log(e);
             if (!e.deleted)
               return (
                 <View
@@ -77,8 +78,10 @@ const ShowNotifications = ({ showNotification, setShowNotification, type }) => {
                   <TouchableOpacity
                     key={"key2" + i}
                     onPress={async () => {
-                      queryPushNotificationLog(setShowNotification, type);
                       await updateUnreadToNotification(type, e.documentId);
+                      const resp = await queryPushNotificationLog(type);
+
+                      setShowNotification(resp);
                     }}
                     style={{
                       backgroundColor: e.unread ? "#BCD5DE" : "gray",
@@ -103,8 +106,10 @@ const ShowNotifications = ({ showNotification, setShowNotification, type }) => {
                   <TouchableOpacity
                     key={"key" + i}
                     onPress={async () => {
-                      queryPushNotificationLog(setShowNotification, type);
                       await updateDeletedToNotification(type, e.documentId);
+                      const resp = await queryPushNotificationLog(type);
+
+                      setShowNotification(resp);
                     }}
                     style={{
                       backgroundColor: "#ABB4B7",

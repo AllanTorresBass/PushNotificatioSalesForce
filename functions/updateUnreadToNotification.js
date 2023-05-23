@@ -9,8 +9,6 @@ import {
 } from "firebase/firestore";
 import { db } from "../database/firebase";
 const updateUnreadToNotification = async (type, documentId) => {
-  let querySubscriptionsList;
-  let array = [];
   let document = `Push_Notification_${type}s_log`;
 
   const docRef = doc(db, document, documentId);
